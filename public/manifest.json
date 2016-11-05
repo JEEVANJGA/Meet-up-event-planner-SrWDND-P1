@@ -1,7 +1,0 @@
-{
-  "name": "meetup planner",
-  "short_name": "meetup planner",
-  "description": "account creation, event creation, event display",
-  "start_url": "/",
-  "display": "standalone"
-}
