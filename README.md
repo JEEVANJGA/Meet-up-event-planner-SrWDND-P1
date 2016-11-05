@@ -1,4 +1,4 @@
-# \Meetup Event Planner>
+# Meetup Event Planner
 
 account creation, event creation, event display
 
@@ -39,7 +39,7 @@ Optional message to the guests with additional information about the event
 First, make sure you have the [Polymer CLI](https://www.npmjs.com/package/polymer-cli) installed. Then run `polymer serve` to serve your application locally.
 
 ## Use bower install
-	Install packages with bower install. Bower installs packages to $bower_components/.
+	Install packages with bower install. Bower installs packages to bower_components/.
 	
 ## Viewing Your Application
 
