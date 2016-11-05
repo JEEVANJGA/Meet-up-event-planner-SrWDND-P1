@@ -1,4 +1,4 @@
-# \<meetup planner\>
+# \Meetup Event Planner>
 
 account creation, event creation, event display
 
@@ -38,8 +38,8 @@ Optional message to the guests with additional information about the event
 
 First, make sure you have the [Polymer CLI](https://www.npmjs.com/package/polymer-cli) installed. Then run `polymer serve` to serve your application locally.
 
-!!! Use bower install
-	Install packages with bower install. Bower installs packages to bower_components/.
+## Use bower install
+	Install packages with bower install. Bower installs packages to $bower_components/.
 	
 ## Viewing Your Application
 
@@ -73,5 +73,9 @@ $ polymer test
 Your application is already set up to be tested via [web-component-tester](https://github.com/Polymer/web-component-tester). Run `polymer test` to run your application's test suite locally.
 
 
-Notes:
+##Notes:
 Have used date range picker from http://www.daterangepicker.com/ 
+
+
+## Demo site
+https://meetup1-b9738.firebaseapp.com/
