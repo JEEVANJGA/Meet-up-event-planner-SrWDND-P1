@@ -1,0 +1,400 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tab.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-header-panel/paper-header-panel.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/gold-email-input/gold-email-input.html">
+<link rel="import" href="../../bower_components/iron-form/iron-form.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+
+
+<script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+<script src="../../bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+<link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+
+<!-- Include Required Prerequisites for daterangepicker -->
+<script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/latest/css/bootstrap.css" />
+ 
+<!-- Include Date Range Picker -->
+<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+
+<dom-module id="meet-up">
+  <template>
+  
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+ 
+<!--paper toolbar styling-->  
+<style is="custom-style">
+  paper-toolbar.red {
+    opacity: 0.7;
+    --paper-toolbar-background: #EE5A10;
+    --paper-toolbar-title: {
+      font-style: italic;
+      font-weight: bold;
+    };
+  }
+  .self-end {
+    /* This mixin (from iron-flex-layout) aligns the tabs to the
+       bottom of the toolbar. */
+    @apply(--layout-self-end);
+  }
+</style>
+
+<!--paper tab styling-->  
+<style is="custom-style">
+  paper-tab[link] a {
+    /* These mixins (from iron-flex-layout) center the link text. */
+    @apply(--layout-horizontal);
+    @apply(--layout-center-center);
+    
+    color: #fff;
+    text-decoration: none;
+  }
+</style>
+<!--paper card styling--> 
+<style is="custom-style">
+    paper-card{
+        min-width: 33vw;
+
+        --paper-card: {
+          opacity: 0.65;
+         };       
+    }
+
+</style>
+<!--paper date picker dialog styling--> 
+<style is="custom-style" include="paper-date-picker-dialog-style">
+    section {
+      margin: 24px;
+    }
+  </style>
+
+<paper-header-panel class="flex" mode="waterfall" >
+<paper-toolbar class="red"; style="width:100%; height: 110px;">
+<span class="title">Meet-Up Event Planner</span> 
+<paper-tabs selected="{{selected}}" class="bottom self-end" autofocus style="width: 100%;">
+  <paper-tab id="one">New User</paper-tab>
+  <paper-tab id="two">New Event</paper-tab>
+  <paper-tab id="three">All Events</paper-tab>
+</paper-tabs>
+</paper-toolbar>
+</paper-header-panel>
+
+  <script>
+
+  var tabs = {
+      one: document.querySelector('#one'),
+      two: document.querySelector('#two'),
+      three: document.querySelector('#three')
+  };
+
+  tabs.one.addEventListener('click', function(e) {
+    //console.log('one');
+  document.getElementById("User Name").focus();
+  });
+
+  tabs.two.addEventListener('click', function(e) {
+    //console.log('two');
+    document.getElementById("Event name").focus();
+  });
+
+</script>
+
+   <style is="custom-style">
+   /* iron-flex-layout style  */
+  .flex-center-justified {
+    @apply(--layout-horizontal);
+    @apply(--layout-center-justified);
+  }
+</style> 
+    
+    <br>
+   <iron-pages selected="{{selected}}">
+        <div>  <!--page1-->
+        <div class="container flex-center-justified">              
+        <paper-card heading="User Signup" style="width: 95%; height: 80%; "> 
+        <div class="card-content">Enter Details to Signup       
+        
+        <style>
+          paper-checkbox .subtitle {
+            display: block;
+            font-size: 0.8em;
+            margin-top: 2px;
+            max-width: 150px;
+          }
+
+          button.no-style {
+            -webkit-appearance: none;
+            border: 0;
+            padding: 0;
+            background: transparent;
+          }
+        </style>
+        <form is="iron-form" method="get" action="/" id="submitOptions">
+
+          <label for="User Name">
+          <paper-input name="User Name" label="User Name" id="User Name" required auto-validate autofocus  style="width: 110%;" autocomplete="name" > </paper-input> 
+          </label>
+          <br>
+          <label for="Email">
+          <gold-email-input required auto-validate error-message="Please enter a valid email" name="Email" label="Email" id="Email" style="width: 110%;"> </gold-email-input>
+          </label>
+          <br>
+          <label for="Password">
+          <paper-input name="password" label="Password" id="Password" type="password" required char-counter maxlength="10" style="width: 110%;" auto-validate allowed-char-counter minlength="6" error-message="Must be at least 6 characters." autocomplete="email"></paper-input>
+          </label>
+          <br>
+          <label for="Job Title (Optional)">
+          <paper-input label="Job Title (Optional)" id="Job Title (Optional)"  style="width: 110%;"> </paper-input>
+          </label>
+          <br>
+          <label for="Employer (Optional)">
+          <paper-input label="Employer (Optional)" id="Employer (Optional)" style="width: 110%;"> </paper-input>
+          </label>
+          <br><br>
+              <paper-button raised onclick="_submit(event)">Submit</paper-button>
+              <paper-button raised onclick="_reset(event)">Reset</paper-button>
+          <div class="output"></div>
+        </form>
+        </div>
+        </paper-card>
+        <script>
+        
+          function _submit(event) {
+            Polymer.dom(event).localTarget.parentElement.submit();
+          }
+          function _reset(event) {
+            var form = Polymer.dom(event).localTarget.parentElement
+            form.reset();
+            form.querySelector('.output').innerHTML = '';
+          }
+          submitOptions.addEventListener('iron-form-submit', function(event) {
+
+            this.querySelector('.output').innerHTML = JSON.stringify(event.detail);
+          });
+        </script>
+        </div>
+        </div> 
+
+        <div> <!--page2-->
+                
+        <div>  
+        <div class="container flex-center-justified">              
+        <paper-card heading="New Event" style="width: 95%; height: 80%; "> 
+        <div class="card-content">Enter New Event Details       
+        <style>
+          paper-checkbox .subtitle {
+            display: block;
+            font-size: 0.8em;
+            margin-top: 2px;
+            max-width: 150px;
+          }
+
+          button.no-style {
+            -webkit-appearance: none;
+            border: 0;
+            padding: 0;
+            background: transparent;
+          }
+        </style>
+        <form is="iron-form" method="get" action="/" id="submitOptions2">
+          <label for="Event name">
+          <paper-input name="Event name" id="Event name" label="Event name" required auto-validate autofocus style="width: 110%;"> </paper-input> 
+          </label>
+          <br>
+          <label for="Event type">
+          <input name="Event type" type="text"  id="Event type" label="Event type" autocomplete="events" placeholder="Event Type" list = "events" required style="width: 110%;">
+          </label>
+              <datalist id = "events">
+                  <option value = "Party"></option>
+                  <option value = "Meeting"></option>
+                  <option value = "Conference "></option>
+                  <option value = "Sports Game"></option>
+                  <option value = "Wedding"></option>
+              </datalist>
+              <br>
+          <label for="Event host">
+          <paper-input name="Event host" id="Event host" label="Event host" required auto-validate style="width: 110%;"> </paper-input>
+          </label>
+          <br>
+          <label for="Start and End Date & Time"> Start and End Date & Time
+          <input type="text" name="daterange" id="Start and End Date & Time" label="Start and End Date & Time"  required/>
+          </label>
+          <br>
+          <label for="autocomplete">
+          <paper-input id="autocomplete" onFocus="geolocate()" name="Event Location" label="Event Location" required auto-validate style="width: 110%;"> </paper-input>
+          </label>
+          <br>
+          <label for="Guest list">
+          <paper-input name="Guest list" label="Guest list" id="Guest list" required auto-validate style="width: 110%;" placeholder="Who's invited?" data-required-error="Guest list required" data-error="Guest list required" > </paper-input>
+          </label>
+          <br>
+          <label for="Message (Optional)">
+          <paper-input label="Message (Optional)" id="Message (Optional)" style="width: 110%;"> </paper-input>
+          </label>
+              <br><br>
+              <paper-button raised onclick="_submit(event)">Create Event</paper-button>
+              <paper-button raised onclick="_reset(event)">Reset</paper-button>
+          <div class="output"></div>
+        </form>
+        </div>
+        </paper-card>
+
+ 
+<script type="text/javascript">
+$(function() {
+    $('input[name="daterange"]').daterangepicker({
+        timePicker: true,
+        timePickerIncrement: 1,
+        locale: {
+            format: 'MM/DD/YYYY h:mm A'
+        }
+    });
+});
+</script>
+        <script>
+          function _submit(event) {
+            Polymer.dom(event).localTarget.parentElement.submit();
+          }
+          function _reset(event) {
+            var form = Polymer.dom(event).localTarget.parentElement
+            form.reset();
+            form.querySelector('.output').innerHTML = '';
+          }
+          submitOptions2.addEventListener('iron-form-submit', function(event) {
+            this.querySelector('.output').innerHTML = JSON.stringify(event.detail);
+          });
+        </script>
+
+        </div>
+        </div> 
+           
+        </div>
+        
+        <div> <!--Page 3-->
+  
+  <style is="custom-style">
+  .flex-horizontal {
+    @apply(--layout-horizontal);
+  }
+  .flexchild {
+    @apply(--layout-flex);
+  }
+  .flex-equal-around-justified {
+    @apply(--layout-horizontal);
+    @apply(--layout-around-justified);
+  }
+</style>
+
+          <div class="container flex-center-justified">              
+           <paper-card heading="Events" style="width: 85%; height: 80%; ">
+             <p>
+             <div class="container flex-equal-around-justified">
+               <div>
+              <paper-material elevation="4" >
+                  Evening Party - Socializing<br>
+                  Hosted by Jagan at Udacity HQ<br>
+                  Starts 10/01/16 8:00pm – Ends 10/02/16 1:00am <br>
+                  Guest List: Jamie, Jennifer, Todd 
+              </paper-material>
+                </div>
+                
+                <div>
+              <paper-material elevation="4" >
+                Evening Party - Socializing  <br>
+                  Hosted by Cameron at Udacity HQ   <br>
+                  Starts 13/01/16 8:00pm – Ends 13/02/16 1:00am <br>
+                  Guest List: Jaffer, Jennifer, Teddy 
+              </paper-material>
+              </div>
+              </div>
+             </p>
+           </paper-card>
+           </div>
+
+            
+        </div>
+  </iron-pages> 
+  
+
+  <script>
+  document.addEventListener('click', function(e) {
+    var pages = document.querySelector('iron-pages');
+    pages.forceSynchronousItemUpdate()
+;
+  });
+</script>
+
+  </template>
+
+
+  <script>
+    Polymer({
+
+      is: 'meet-up',
+
+      properties: {
+         selected: {
+            value: 0
+        },
+        prop1: {
+          type: String,
+          value: 'meet-up',
+        },
+      },
+     
+    });
+  </script>
+
+<script>
+// This example displays an address form, using the autocomplete feature
+// of the Google Places API to help users fill in the information.
+
+var placeSearch, autocomplete;
+function initAutocomplete() {
+  // Create the autocomplete object, restricting the search to geographical
+  // location types.
+  autocomplete = new google.maps.places.Autocomplete(
+      /** @type {!HTMLInputElement} */(document.getElementById('autocomplete')),
+      {types: ['geocode']});
+
+}
+
+// [START region_geolocation]
+// Bias the autocomplete object to the user's geographical location,
+// as supplied by the browser's 'navigator.geolocation' object.
+function geolocate() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      var geolocation = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
+      var circle = new google.maps.Circle({
+        center: geolocation,
+        radius: position.coords.accuracy
+      });
+      autocomplete.setBounds(circle.getBounds());
+    });
+  }
+}
+// [END region_geolocation]
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6yb-harBaCbt0yGj7G2KY1C2dsq1-FOU&signed_in=true&libraries=places&callback=initAutocomplete"
+        async defer></script>
+
+
+ </dom-module>

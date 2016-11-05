@@ -1,0 +1,13 @@
+{
+  "entrypoint": "index.html",
+  "shell": "src/meet-up/meet-up.html",
+  "sources": [
+    "src/**/*",
+    "images/**/*"
+  ],
+  "includeDependencies": [
+    "bower.json",
+    "README.md",
+    "bower_components/webcomponentsjs/webcomponents-lite.min.js"
+  ]
+}
