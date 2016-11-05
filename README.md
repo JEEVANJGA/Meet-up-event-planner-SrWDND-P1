@@ -1,6 +1,6 @@
 # Meetup Event Planner
 
-account creation, event creation, event display
+Account creation, Event creation, Event display
 
 The app must provide a form for users to create an account. 
 
